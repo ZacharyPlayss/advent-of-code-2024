@@ -10,11 +10,11 @@ public class Day1p1Module implements Module {
 
     @Override
     public String getTitle() {
-        return "Day 1: Historian Hysteria (part 2)";
+        return "Day 1: Historian Hysteria (part 1)";
     }
 
     @Override
     public String getName() {
-        return "Day1p2";
+        return "Day1p1";
     }
 }

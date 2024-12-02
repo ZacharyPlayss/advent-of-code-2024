@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CsvReader {
-    private static int[][] readArraysFromCSV(String filePath)  {
+    public static int[][] readArraysFromCSV(String filePath)  {
         List<Integer> column1 = new ArrayList<>();
         List<Integer> column2 = new ArrayList<>();
 

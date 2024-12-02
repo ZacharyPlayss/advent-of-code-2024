@@ -1,12 +1,12 @@
 package zvds.validator;
 
+import zvds.utils.ArrayUtils;
 import zvds.validator.predicates.AdjacentLevelsDifferBy1To3Predicate;
 import zvds.validator.predicates.DecreasingPredicate;
 import zvds.validator.predicates.IncreasingPredicate;
 
 import java.util.function.Predicate;
 
-import static zvds.utils.ArrayHelper.removeElement;
 
 public class ArrayValidator {
 
@@ -36,7 +36,7 @@ public class ArrayValidator {
             }
 
             for (int i = 0; i < array.length; i++) {
-                int[] dampenedArray = removeElement(array, i);
+                int[] dampenedArray = ArrayUtils.removeElement(array, i);
                 if (validator.isSafe(dampenedArray)) {
                     return true;
                 }
