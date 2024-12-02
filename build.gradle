@@ -1,12 +1,20 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'zvds'
 version = '1.0-SNAPSHOT'
-
+application {
+    mainClass = 'zvds.Main'
+}
 repositories {
     mavenCentral()
+}
+tasks.run {
+    doFirst {
+        standardInput = System.in
+    }
 }
 
 dependencies {
