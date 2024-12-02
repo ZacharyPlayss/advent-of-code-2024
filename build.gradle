@@ -12,6 +12,10 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation project(':Day1p1')
+    implementation project(':Day1p2')
+    implementation project(':Day2p1')
+    implementation project(':Day2p2')
 }
 
 test {

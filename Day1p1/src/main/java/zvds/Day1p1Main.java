@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Main {
+public class Day1p1Main {
     public static void main(String[] args) {
         int[][] allArrays= readArraysFromCSV("E:/Development/Java/adventofcode2024/Day1p1/src/main/resources/input-sheet.csv");
         int[] ia1 = allArrays[0];

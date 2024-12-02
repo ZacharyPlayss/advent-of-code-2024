@@ -4,7 +4,7 @@ import zvds.reader.CsvReader;
 
 import java.util.HashMap;
 
-public class Main {
+public class Day1p2Main {
     public static void main(String[] args) {
         HashMap<Integer, Integer> appearanceMap = new HashMap<Integer, Integer>();
         int[][] allArrays= CsvReader.readArraysFromCSV("E:\\Development\\Java\\adventofcode2024\\Day1p2\\src\\main\\resources\\input-sheet.csv");
