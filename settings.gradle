@@ -4,4 +4,5 @@ include ':Day1p1'
 include ':Day2p1'
 include ':Day2p2'
 include 'Day3p1'
+include 'Day3p2'
 
