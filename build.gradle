@@ -24,6 +24,10 @@ dependencies {
     implementation project(':Day1p2')
     implementation project(':Day2p1')
     implementation project(':Day2p2')
+    implementation project(':Day3p1')
+    implementation project(':Day3p2')
+    implementation project(':Day4p1')
+    implementation project(':Day4p2')
 }
 
 test {

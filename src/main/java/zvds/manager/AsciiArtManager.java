@@ -1,13 +1,13 @@
 package zvds.manager;
 
-import zvds.Main;
+import zvds.Day4p1Main;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class AsciiArtManager {
     public void displayAsciiArt(String path) {
-        try (InputStream inputStream = Main.class.getResourceAsStream(path)) {
+        try (InputStream inputStream = Day4p1Main.class.getResourceAsStream(path)) {
             if (inputStream == null) {
                 System.out.println("No ASCII art found at " + path);
                 return;

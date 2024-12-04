@@ -2,12 +2,10 @@ package zvds;
 
 import zvds.reader.TxtReader;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day3p2 {
+public class Day3p2Main {
     public static void main(String[] args) {
         //String input = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
         String input = TxtReader.readFileToString("E:/Development/Java/adventofcode2024/Day3p2/src/main/resources/mul-input.txt");

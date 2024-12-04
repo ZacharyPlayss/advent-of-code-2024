@@ -2,10 +2,7 @@ package zvds;
 
 import zvds.manager.AsciiArtManager;
 import zvds.manager.ModuleManager;
-import zvds.modules.Day1p1Module;
-import zvds.modules.Day1p2Module;
-import zvds.modules.Day2p1Module;
-import zvds.modules.Day2p2Module;
+import zvds.modules.*;
 import zvds.modules.Module;
 
 import java.util.Arrays;
@@ -17,7 +14,11 @@ public class Main {
                 new Day1p1Module(),
                 new Day1p2Module(),
                 new Day2p1Module(),
-                new Day2p2Module()
+                new Day2p2Module(),
+                new Day3p1Module(),
+                new Day3p2Module(),
+                new Day4p1Module(),
+                new Day4p2Module()
         );
         AsciiArtManager asciiArtManager = new AsciiArtManager();
         ModuleManager moduleManager = new ModuleManager(modules, asciiArtManager);
