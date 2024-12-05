@@ -17,13 +17,15 @@ public class Main {
 
         Set<Rule> rules = input.getRules();
         List<List<Integer>> printRuns = input.getPrintRuns();
+
         int result = printRuns.stream()
-                .filter(printRun -> RuleValidator.validPrint(rules, printRun))
+                .filter(printRun -> !RuleValidator.validPrint(rules, printRun))
+                .map(printRun -> ListRuleSorter.sortPrint(printRun, rules))
                 .mapToInt(Main::middlePage)
                 .sum();
-        System.out.println("Result of Part 1: " + result);
-    }
 
+        System.out.println("Result of Part 2: " + result);
+    }
 
     public static int middlePage(List<Integer> pages) {
         if (pages.isEmpty()) throw new IllegalArgumentException("Empty print run");
