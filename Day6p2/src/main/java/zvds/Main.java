@@ -1,163 +1,134 @@
 package zvds;
 
-import zvds.domain.Path;
-import zvds.domain.Point;
-import zvds.reader.TxtReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class Main {
-    static int currentGuardX = -1;
-    static int currentGuardY = -1;
-    static int guardStateIndex = -1;
-    static char[] possibleDirections = {'^', '>', 'v', '<'};
-    static int[][] directionMoves = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-    static char[][] input = TxtReader.readFileToChar2DArray("E:\\Development\\Java\\adventofcode2024\\Day6p1\\src\\main\\resources\\test-input.txt");
 
-    public static void main(String[] args) {
+    private static final int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-        Path path = new Path();
+    public static void main(String[] args) throws IOException {
+        String input = Files.readString(Paths.get("C:\\Users\\zachs\\Desktop\\PRIVATE\\DEVELOPMENT\\java\\advent-of-code-2024\\Day6p2\\src\\main\\resources\\input.txt"));
+        char[][] grid = parseInput(input);
+        grid = padGrid(grid);
 
-        for (int i = 0; i < input.length; i++) {
-            for (int j = 0; j < input[i].length; j++) {
-                System.out.print(input[i][j]);
-                if (charArrayContains(input[i][j], possibleDirections)) {
-                    currentGuardX = i;
-                    currentGuardY = j;
-                    guardStateIndex = GetCurrentGuardState(input[i][j], possibleDirections);
-                }
+        int[] start = findStart(grid, '^');
+
+        // Part 1
+        char[][] part1Grid = deepCopy(grid);
+        int direction = 0;
+        int[] pos = Arrays.copyOf(start, 2);
+
+        while (part1Grid[pos[0] + DIRECTIONS[direction][0]][pos[1] + DIRECTIONS[direction][1]] != '0') {
+            if (part1Grid[pos[0] + DIRECTIONS[direction][0]][pos[1] + DIRECTIONS[direction][1]] == '#') {
+                direction = (direction + 1) % 4;
+            } else {
+                pos[0] += DIRECTIONS[direction][0];
+                pos[1] += DIRECTIONS[direction][1];
+                part1Grid[pos[0]][pos[1]] = 'X';
             }
-            System.out.println();
         }
 
-        System.out.println("De guard staat op positie " + currentGuardX + " " + currentGuardY);
-        System.out.println("De guard staat op positie en is in staat : " + possibleDirections[guardStateIndex]);
+        int xCount = countOccurrences(part1Grid, 'X');
+        System.out.println(xCount);
 
-        path.addPoint(new Point(currentGuardX, currentGuardY, false));
+        // Part 2
+        int count = 0;
 
-        while (containsGuard(input)) {
-            moveGuard(input, currentGuardX, currentGuardY, guardStateIndex, path);
+        for (int i = 0; i < part1Grid.length; i++) {
+            for (int j = 0; j < part1Grid[0].length; j++) {
+                if (part1Grid[i][j] == 'X') {
+                    char[][] part2Grid = deepCopy(grid);
+                    part2Grid[i][j] = '#';
+                    int[][] turns = new int[grid.length][grid[0].length];
+                    direction = 0;
+                    pos = Arrays.copyOf(start, 2);
 
-            boolean rotationPoint = path.isRotationPoint(currentGuardX, currentGuardY);
-            path.addPoint(new Point(currentGuardX, currentGuardY, rotationPoint));
-
-            for (int i = 0; i < input.length; i++) {
-                for (int j = 0; j < input[i].length; j++) {
-                    if (rotationPoint) {
-                        System.out.print('+');
-                    } else {
-                        System.out.print(input[i][j]);
+                    while (part2Grid[pos[0] + DIRECTIONS[direction][0]][pos[1] + DIRECTIONS[direction][1]] != '0') {
+                        if (part2Grid[pos[0] + DIRECTIONS[direction][0]][pos[1] + DIRECTIONS[direction][1]] == '#') {
+                            if ((turns[pos[0]][pos[1]] & (1 << direction)) != 0) {
+                                count++;
+                                break;
+                            }
+                            turns[pos[0]][pos[1]] |= (1 << direction);
+                            direction = (direction + 1) % 4;
+                        } else {
+                            pos[0] += DIRECTIONS[direction][0];
+                            pos[1] += DIRECTIONS[direction][1];
+                            part2Grid[pos[0]][pos[1]] = 'X';
+                        }
                     }
                 }
-                System.out.println();
-            }
-
-            System.out.println();
-        }
-
-        // Count the number of 'X' and '+' in the grid after the simulation
-        int validSpotsCount = countValidSpots(input);
-        System.out.println("Total valid spots visited: " + validSpotsCount);
-
-        // Print the entire path the guard took
-        System.out.println("Path taken by the guard:");
-        path.printPath();
-    }
-
-    private static void moveGuard(char[][] input, int currentGuardX, int currentGuardY, int guardStateIndex, Path path) {
-        while (true) {
-            char direction = possibleDirections[guardStateIndex];
-            int[] moveCalculations = directionMoves[guardStateIndex];
-            int newX = currentGuardX + moveCalculations[0];
-            int newY = currentGuardY + moveCalculations[1];
-
-            // Check if the new position is out of bounds
-            if (newX < 0 || newY < 0 || newX >= input.length || newY >= input[0].length) {
-                // Guard moves off the screen
-                input[currentGuardX][currentGuardY] = 'X'; // Mark the last spot
-                return;
-            }
-
-            // Check if the move is valid
-            if (input[newX][newY] != '#') {
-                // Mark the previous position with 'X' or '+' based on rotation point
-                input[currentGuardX][currentGuardY] = path.isRotationPoint(currentGuardX, currentGuardY) ? '+' : '.';
-                input[newX][newY] = direction; // Update the guard's new position
-                setCurrentGuardX(newX);
-                setCurrentGuardY(newY);
-                return;
-            } else {
-                // Rotate the guard and retry
-                rotateGuard(input, currentGuardX, currentGuardY, path);
-                guardStateIndex = Main.guardStateIndex;
             }
         }
+
+        System.out.println(count);
     }
 
-    private static void rotateGuard(char[][] input, int currentGuardX, int currentGuardY, Path path) {
-        guardStateIndex = (guardStateIndex + 1) % possibleDirections.length;
-        input[currentGuardX][currentGuardY] = possibleDirections[guardStateIndex];
-
-        // Mark the current position as a rotation point
-        path.setRotationPoint(currentGuardX, currentGuardY, true);
-    }
-
-    private static int GetCurrentGuardState(char c, char[] possibleSymbols) {
-        for (int i = 0; i < possibleSymbols.length; i++) {
-            if (possibleSymbols[i] == c) {
-                return i;
-            }
+    private static char[][] parseInput(String input) {
+        String[] lines = input.split("\\n");
+        char[][] grid = new char[lines.length][lines[0].length()];
+        for (int i = 0; i < lines.length; i++) {
+            grid[i] = lines[i].toCharArray();
         }
-        return -1;
+        return grid;
     }
 
-    private static boolean charArrayContains(char c, char[] array) {
-        for (char x : array) {
-            if (x == c) {
-                return true;
-            }
+    private static char[][] padGrid(char[][] grid) {
+        // Find the maximum width of rows to handle non-uniform lengths
+        int maxCols = 0;
+        for (char[] row : grid) {
+            maxCols = Math.max(maxCols, row.length);
         }
-        return false;
+
+        // Define padded grid dimensions
+        int rows = grid.length + 2;
+        int cols = maxCols + 2;
+        char[][] paddedGrid = new char[rows][cols];
+
+        // Fill the padded grid with default '0' characters
+        for (char[] row : paddedGrid) {
+            Arrays.fill(row, '0');
+        }
+
+        // Copy the original grid into the padded grid
+        for (int i = 0; i < grid.length; i++) {
+            System.arraycopy(grid[i], 0, paddedGrid[i + 1], 1, grid[i].length);
+        }
+
+        return paddedGrid;
     }
 
-    private static boolean containsGuard(char[][] input) {
-        for (char[] row : input) {
-            for (char cell : row) {
-                if (charArrayContains(cell, possibleDirections)) {
-                    return true;
+    private static int[] findStart(char[][] grid, char startChar) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == startChar) {
+                    return new int[]{i, j};
                 }
             }
         }
-        return false;
+        throw new IllegalArgumentException("Start character not found");
     }
 
-    private static int countValidSpots(char[][] input) {
+    private static char[][] deepCopy(char[][] grid) {
+        char[][] copy = new char[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            System.arraycopy(grid[i], 0, copy[i], 0, grid[0].length);
+        }
+        return copy;
+    }
+
+    private static int countOccurrences(char[][] grid, char target) {
         int count = 0;
-        for (char[] row : input) {
-            for (char cell : row) {
-                if (cell == 'X' || cell == '+') {
+        for (char[] row : grid) {
+            for (char c : row) {
+                if (c == target) {
                     count++;
                 }
             }
         }
         return count;
-    }
-
-    public static int getCurrentGuardX() {
-        return currentGuardX;
-    }
-
-    public static int getCurrentGuardY() {
-        return currentGuardY;
-    }
-
-    public static void setCurrentGuardX(int currentGuardX) {
-        Main.currentGuardX = currentGuardX;
-    }
-
-    public static void setCurrentGuardY(int currentGuardY) {
-        Main.currentGuardY = currentGuardY;
-    }
-
-    public static void setGuardStateIndex(int guardStateIndex) {
-        Main.guardStateIndex = guardStateIndex;
     }
 }
