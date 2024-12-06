@@ -1,5 +1,7 @@
 package zvds;
 
+import zvds.domain.Path;
+import zvds.domain.Point;
 import zvds.reader.TxtReader;
 
 public class Main {
@@ -11,6 +13,9 @@ public class Main {
     static char[][] input = TxtReader.readFileToChar2DArray("E:\\Development\\Java\\adventofcode2024\\Day6p1\\src\\main\\resources\\test-input.txt");
 
     public static void main(String[] args) {
+
+        Path path = new Path();
+
         for (int i = 0; i < input.length; i++) {
             for (int j = 0; j < input[i].length; j++) {
                 System.out.print(input[i][j]);
@@ -26,12 +31,21 @@ public class Main {
         System.out.println("De guard staat op positie " + currentGuardX + " " + currentGuardY);
         System.out.println("De guard staat op positie en is in staat : " + possibleDirections[guardStateIndex]);
 
+        path.addPoint(new Point(currentGuardX, currentGuardY, false));
+
         while (containsGuard(input)) {
-            moveGuard(input, currentGuardX, currentGuardY, guardStateIndex);
+            moveGuard(input, currentGuardX, currentGuardY, guardStateIndex, path);
+
+            boolean rotationPoint = path.isRotationPoint(currentGuardX, currentGuardY);
+            path.addPoint(new Point(currentGuardX, currentGuardY, rotationPoint));
 
             for (int i = 0; i < input.length; i++) {
                 for (int j = 0; j < input[i].length; j++) {
-                    System.out.print(input[i][j]);
+                    if (rotationPoint) {
+                        System.out.print('+');
+                    } else {
+                        System.out.print(input[i][j]);
+                    }
                 }
                 System.out.println();
             }
@@ -39,12 +53,16 @@ public class Main {
             System.out.println();
         }
 
-        // Count the number of 'X' in the grid after the simulation
+        // Count the number of 'X' and '+' in the grid after the simulation
         int validSpotsCount = countValidSpots(input);
         System.out.println("Total valid spots visited: " + validSpotsCount);
+
+        // Print the entire path the guard took
+        System.out.println("Path taken by the guard:");
+        path.printPath();
     }
 
-    private static void moveGuard(char[][] input, int currentGuardX, int currentGuardY, int guardStateIndex) {
+    private static void moveGuard(char[][] input, int currentGuardX, int currentGuardY, int guardStateIndex, Path path) {
         while (true) {
             char direction = possibleDirections[guardStateIndex];
             int[] moveCalculations = directionMoves[guardStateIndex];
@@ -60,22 +78,26 @@ public class Main {
 
             // Check if the move is valid
             if (input[newX][newY] != '#') {
-                input[currentGuardX][currentGuardY] = 'X'; // Mark the old position
+                // Mark the previous position with 'X' or '+' based on rotation point
+                input[currentGuardX][currentGuardY] = path.isRotationPoint(currentGuardX, currentGuardY) ? '+' : '.';
                 input[newX][newY] = direction; // Update the guard's new position
                 setCurrentGuardX(newX);
                 setCurrentGuardY(newY);
                 return;
             } else {
                 // Rotate the guard and retry
-                rotateGuard(input, currentGuardX, currentGuardY);
+                rotateGuard(input, currentGuardX, currentGuardY, path);
                 guardStateIndex = Main.guardStateIndex;
             }
         }
     }
 
-    private static void rotateGuard(char[][] input, int currentGuardX, int currentGuardY) {
+    private static void rotateGuard(char[][] input, int currentGuardX, int currentGuardY, Path path) {
         guardStateIndex = (guardStateIndex + 1) % possibleDirections.length;
         input[currentGuardX][currentGuardY] = possibleDirections[guardStateIndex];
+
+        // Mark the current position as a rotation point
+        path.setRotationPoint(currentGuardX, currentGuardY, true);
     }
 
     private static int GetCurrentGuardState(char c, char[] possibleSymbols) {
@@ -111,7 +133,7 @@ public class Main {
         int count = 0;
         for (char[] row : input) {
             for (char cell : row) {
-                if (cell == 'X') {
+                if (cell == 'X' || cell == '+') {
                     count++;
                 }
             }
