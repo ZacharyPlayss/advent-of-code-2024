@@ -18,7 +18,13 @@ public class Main {
                 new Day3p1Module(),
                 new Day3p2Module(),
                 new Day4p1Module(),
-                new Day4p2Module()
+                new Day4p2Module(),
+                new Day5p1Module(),
+                new Day5p2Module(),
+                new Day6p1Module(),
+                new Day6p2Module(),
+                new Day7p1Module(),
+                new Day7p2Module()
         );
         AsciiArtManager asciiArtManager = new AsciiArtManager();
         ModuleManager moduleManager = new ModuleManager(modules, asciiArtManager);

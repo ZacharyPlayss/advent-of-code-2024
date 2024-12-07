@@ -2,13 +2,13 @@ package zvds;
 
 import zvds.reader.TxtReader;
 
-public class Main {
+public class Day6p1Main {
     static int currentGuardX = -1;
     static int currentGuardY = -1;
     static int guardStateIndex = -1;
     static char[] possibleDirections = {'^', '>', 'v', '<'};
     static int[][] directionMoves = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-    static char[][] input = TxtReader.readFileToChar2DArray("E:\\Development\\Java\\adventofcode2024\\Day6p1\\src\\main\\resources\\input.txt");
+    static char[][] input = TxtReader.readFileToChar2DArray("E:\\Development\\Java\\adventofcode2024\\Day6p1\\src\\main\\resources\\test-input.txt");
 
     public static void main(String[] args) {
         for (int i = 0; i < input.length; i++) {
@@ -68,7 +68,7 @@ public class Main {
             } else {
                 // Rotate the guard and retry
                 rotateGuard(input, currentGuardX, currentGuardY);
-                guardStateIndex = Main.guardStateIndex;
+                guardStateIndex = Day6p1Main.guardStateIndex;
             }
         }
     }
@@ -128,14 +128,14 @@ public class Main {
     }
 
     public static void setCurrentGuardX(int currentGuardX) {
-        Main.currentGuardX = currentGuardX;
+        Day6p1Main.currentGuardX = currentGuardX;
     }
 
     public static void setCurrentGuardY(int currentGuardY) {
-        Main.currentGuardY = currentGuardY;
+        Day6p1Main.currentGuardY = currentGuardY;
     }
 
     public static void setGuardStateIndex(int guardStateIndex) {
-        Main.guardStateIndex = guardStateIndex;
+        Day6p1Main.guardStateIndex = guardStateIndex;
     }
 }

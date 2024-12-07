@@ -10,7 +10,7 @@ public class Day4p1Module implements Module {
 
     @Override
     public String getTitle() {
-        return "Day 4: Mull It Over (part 1)";
+        return "Day 4: Ceres Search (part 1)";
     }
 
     @Override

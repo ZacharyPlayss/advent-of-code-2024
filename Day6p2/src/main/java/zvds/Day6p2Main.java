@@ -5,12 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-public class Main {
+public class Day6p2Main {
 
     private static final int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
     public static void main(String[] args) throws IOException {
-        String input = Files.readString(Paths.get("C:\\Users\\zachs\\Desktop\\PRIVATE\\DEVELOPMENT\\java\\advent-of-code-2024\\Day6p2\\src\\main\\resources\\input.txt"));
+        String input = Files.readString(Paths.get("E:\\Development\\Java\\adventofcode2024\\Day6p2\\src\\main\\resources\\input.txt"));
         char[][] grid = parseInput(input);
         grid = padGrid(grid);
 
