@@ -5,7 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="temurin-17" />
+        <option name="gradleJvm" value="18" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/Day7p1" />
             <option value="$PROJECT_DIR$/Day7p2" />
             <option value="$PROJECT_DIR$/Day8p1" />
+            <option value="$PROJECT_DIR$/Day9p1" />
             <option value="$PROJECT_DIR$/Dayp2" />
           </set>
         </option>
