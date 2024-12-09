@@ -55,6 +55,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         // Test example
+        //String input = "2333133121414131402";
         //String input = "00...111...2...333.44.5555.6666.777.888899";
         String input = Files.readString(Paths.get("C:\\Users\\zachs\\Desktop\\PRIVATE\\DEVELOPMENT\\java\\advent-of-code-2024\\Day9p1\\src\\main\\resources\\input.txt"));
         input = generateDiskMap(input);
@@ -64,11 +65,13 @@ public class Main {
         System.out.println("The checksum is: " + calculateSum(sorted));
     }
     //WRONG ANSWER : 952651339
+    // WRONG ANSWER: 2147483647
     // WRONG ANSWER: 97756286201
     public static String generateDiskMap(String input) {
             StringBuilder result = new StringBuilder();
 
             // Loop through the input in pairs (file length, free space length)
+            int fileIndex = 0;
             for (int i = 0; i < input.length(); i++) {
                 // Get the file length (current digit)
                 int fileLength = Character.getNumericValue(input.charAt(i));
@@ -78,8 +81,9 @@ public class Main {
 
                 // Append the file blocks to the result
                 for (int j = 0; j < fileLength; j++) {
-                    result.append(i); // File represented by its index
+                    result.append(fileIndex); // File represented by its index
                 }
+                fileIndex++;
 
                 // If there's a next digit (free space length)
                 if (i + 1 < input.length()) {
