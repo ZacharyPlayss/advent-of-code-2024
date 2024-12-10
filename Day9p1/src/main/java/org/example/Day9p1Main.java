@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Main {
+public class Day9p1Main {
     public static String sortFiles(String fileString) {
         // Convert the string to a mutable character array
         char[] fileArray = fileString.toCharArray();
