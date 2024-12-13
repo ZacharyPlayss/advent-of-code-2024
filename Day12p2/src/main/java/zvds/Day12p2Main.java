@@ -3,7 +3,7 @@ package zvds;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Day12p2Main {
 
     private static final int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
