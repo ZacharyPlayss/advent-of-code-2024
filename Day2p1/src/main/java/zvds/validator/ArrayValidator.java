@@ -1,8 +1,8 @@
-package zvds.validator.predicates;
+package zvds.validator;
 
 import java.util.function.Predicate;
 
-public class ArrayValidator {
+public class ArrayValidator implements Validator {
 
     private Predicate<int[]> isIncreasing;
     private Predicate<int[]> isDecreasing;
@@ -14,7 +14,13 @@ public class ArrayValidator {
         this.adjacentLevelsDifferBy1To3 = adjacentLevelsDifferBy1To3;
     }
 
-    public boolean isSafe(int[] array) {
-        return (isIncreasing.or(isDecreasing)).and(adjacentLevelsDifferBy1To3).test(array);
+
+    @Override
+    public <T> boolean isValid(T input) {
+        if(input.getClass().isArray()) {
+            return (isIncreasing.or(isDecreasing)).and(adjacentLevelsDifferBy1To3).test((int[]) input);
+        }else{
+            throw new IllegalArgumentException("Arrayvalidator expects the input to be an array");
+        }
     }
 }

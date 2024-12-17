@@ -1,6 +1,7 @@
 package zvds.reader;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TxtReader {
-    public static int[][] readFileTo2DArray(String fileName) {
+    public static int[][] readFileTo2DArray(File fileName) {
         List<int[]> list = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;

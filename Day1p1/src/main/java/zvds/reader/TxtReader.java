@@ -9,15 +9,14 @@ import java.util.List;
 
 public class TxtReader {
 
-    public static int[][] readFileTo2DArrayAsColumns(File fileName) {
+    public static int[][] readFileTo2DArrayAsColumns(File file) {
         List<Integer> column1 = new ArrayList<>();
         List<Integer> column2 = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.trim().split("\\s+");  // Split by whitespace (space or tab)
+                String[] parts = line.trim().split("\\s+");
                 if (parts.length >= 2) {
-                    // Assuming that the first part goes into column1 and second part goes into column2
                     column1.add(Integer.parseInt(parts[0]));
                     column2.add(Integer.parseInt(parts[1]));
                 }

@@ -3,27 +3,35 @@ package zvds;
 
 import zvds.calculator.DistanceCalculator;
 import zvds.calculator.SimpleDistanceCalculator;
-import zvds.reader.CsvReader;
+import zvds.reader.TxtReader;
 import zvds.sorter.ArraySorter;
 import zvds.utils.ArrayUtils;
+
+import java.io.File;
 
 public class Day1p1Main {
 
     public static void main(String[] args) {
-        int[][] allArrays = CsvReader.readArraysFromCSV("E:/Development/Java/adventofcode2024/Day1p1/src/main/resources/input-sheet.csv");
-        int[] ia1 = allArrays[0];
-        int[] ia2 = allArrays[1];
+        File input = fetchInputFile("input.txt");
 
-        ia1 = ArraySorter.sortArray(ia1);
-        ia2 = ArraySorter.sortArray(ia2);
+        int[][] allArrays = TxtReader.readFileTo2DArrayAsColumns(input);
+        int[] column1 = allArrays[0];
+        int[] column2 = allArrays[1];
 
-        ArrayUtils.printArray(ia1);
-        ArrayUtils.printArray(ia2);
+        column1 = ArraySorter.sortArray(column1);
+        column2 = ArraySorter.sortArray(column2);
+
+        ArrayUtils.printArray(column1);
+        ArrayUtils.printArray(column2);
 
         DistanceCalculator distanceCalculator = new SimpleDistanceCalculator();
-        int totalDistance = distanceCalculator.calculateListDifference(ia1, ia2);
+        int totalDistance = distanceCalculator.calculateListDifference(column1, column2);
 
         System.out.println("Total distance between both lists: " + totalDistance);
     }
 
+    private static File fetchInputFile(String fileName){
+        ClassLoader classLoader = Day1p1Main.class.getClassLoader();
+        return new File(classLoader.getResource(fileName).getFile());
+    }
 }
