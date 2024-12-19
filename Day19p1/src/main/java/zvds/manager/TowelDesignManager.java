@@ -96,50 +96,37 @@ public class TowelDesignManager {
         List<String> patterns = patternManager.getTowelPatternStrings();
         patterns.sort((a, b) -> Integer.compare(b.length(), a.length()));
 
-        Map<String, List<List<String>>> memo = new HashMap<>();
-        List<List<String>> allPatternCombinations = findAllCreationPatternsDP(designString, patterns, memo);
+        Map<String, Long> memo = new HashMap<>();
+        long combinationCount = countUniqueCreationPatternsDP(designString, patterns, memo);
 
-        boolean possible = !allPatternCombinations.isEmpty();
+        boolean possible = combinationCount > 0;
         design.setPossible(possible);
         if (possible) {
-            for (List<String> combination : allPatternCombinations) {
-                List<TowelPattern> patternList = combination.stream()
-                        .map(TowelPattern::new)
-                        .collect(Collectors.toList());
-                design.addAllRequiredPatterns(patternList);
-            }
+            design.setPatternCombinationCount(combinationCount);
         }
 
         return possible;
     }
 
-    private List<List<String>> findAllCreationPatternsDP(String design, List<String> patterns, Map<String, List<List<String>>> memo) {
+    private long countUniqueCreationPatternsDP(String design, List<String> patterns, Map<String, Long> memo) {
         if (memo.containsKey(design)) {
             return memo.get(design);
         }
 
-        List<List<String>> result = new ArrayList<>();
-
         if (design.isEmpty()) {
-            result.add(new ArrayList<>());
-            return result;
+            return 1L;
         }
 
+        long count = 0;
         for (String pattern : patterns) {
             if (design.startsWith(pattern)) {
                 String remaining = design.substring(pattern.length());
-                List<List<String>> subCombinations = findAllCreationPatternsDP(remaining, patterns, memo);
-
-                for (List<String> subCombination : subCombinations) {
-                    List<String> newCombination = new ArrayList<>();
-                    newCombination.add(pattern);
-                    newCombination.addAll(subCombination);
-                    result.add(newCombination);
-                }
+                count += countUniqueCreationPatternsDP(remaining, patterns, memo);
             }
         }
 
-        memo.put(design, result);
-        return result;
+        memo.put(design, count);
+        return count;
     }
+
 }

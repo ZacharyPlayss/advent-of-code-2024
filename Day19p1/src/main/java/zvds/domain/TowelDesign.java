@@ -6,13 +6,12 @@ import java.util.List;
 public class TowelDesign {
     private String desiredDesign;
     private List<TowelPattern> requiredPatterns;
-    private List<List<TowelPattern>> allRequiredPatterns;
     private boolean isPossible;
+    private long patternCombinationCount;
 
     public TowelDesign(String desiredDesign) {
         this.desiredDesign = desiredDesign;
         this.requiredPatterns = new ArrayList<TowelPattern>();
-        this.allRequiredPatterns = new ArrayList<>();
         this.isPossible = false;
     }
 
@@ -32,12 +31,11 @@ public class TowelDesign {
         return desiredDesign;
     }
 
-    public void addAllRequiredPatterns(List<TowelPattern> patterns) {
-        this.allRequiredPatterns.add(new ArrayList<>(patterns));
+    public long getPatternCombinationCount() {
+        return patternCombinationCount;
     }
 
-    public List<List<TowelPattern>> getAllRequiredPatterns() {
-        return allRequiredPatterns;
+    public void setPatternCombinationCount(long patternCombinationCount) {
+        this.patternCombinationCount = patternCombinationCount;
     }
-
 }

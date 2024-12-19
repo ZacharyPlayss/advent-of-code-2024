@@ -23,11 +23,10 @@ public class PartTwo implements PartInterface{
             designManager.findAllCreationPatterns(design);
         }
 
-        System.out.println(designManager.getDesigns().get(0).getAllRequiredPatterns().size());
         List<TowelDesign> validDesigns = designManager.getValidDesigns();
-        int totalCount = 0;
+        long totalCount = 0;
         for(int i =0; i <validDesigns.size(); i++){
-            totalCount += validDesigns.get(i).getAllRequiredPatterns().size();
+            totalCount += validDesigns.get(i).getPatternCombinationCount();
         }
         System.out.println("Different combination count: " + totalCount);
     }
