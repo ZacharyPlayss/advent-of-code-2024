@@ -20,20 +20,7 @@ tasks.run {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation project(':Day1p1')
-    implementation project(':Day1p2')
-    implementation project(':Day2p1')
-    implementation project(':Day2p2')
-    implementation project(':Day3p1')
-    implementation project(':Day3p2')
-    implementation project(':Day4p1')
-    implementation project(':Day4p2')
-    implementation project(':Day5p1')
-    implementation project(':Day5p2')
-    implementation project(':Day6p1')
-    implementation project(':Day6p2')
-    implementation project(':Day7p1')
-    implementation project(':Day7p2')
+    implementation project(':Day1')
 }
 
 test {
