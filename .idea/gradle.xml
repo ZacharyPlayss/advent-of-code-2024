@@ -10,9 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Day1" />
-            <option value="$PROJECT_DIR$/Day10p1" />
-            <option value="$PROJECT_DIR$/Day10p2" />
-            <option value="$PROJECT_DIR$/Day11p1" />
+            <option value="$PROJECT_DIR$/Day10" />
+            <option value="$PROJECT_DIR$/Day11" />
             <option value="$PROJECT_DIR$/Day12p1" />
             <option value="$PROJECT_DIR$/Day12p2" />
             <option value="$PROJECT_DIR$/Day13p1" />
@@ -37,8 +36,7 @@
             <option value="$PROJECT_DIR$/Day6p2" />
             <option value="$PROJECT_DIR$/Day7" />
             <option value="$PROJECT_DIR$/Day8" />
-            <option value="$PROJECT_DIR$/Day9p1" />
-            <option value="$PROJECT_DIR$/Day9p2" />
+            <option value="$PROJECT_DIR$/Day9" />
           </set>
         </option>
       </GradleProjectSettings>
