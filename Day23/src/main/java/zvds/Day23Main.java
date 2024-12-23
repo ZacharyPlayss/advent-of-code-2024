@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Day23Main {
     public static void main(String[] args) {
-        File input = fetchInputFile("test-input.txt");
+        File input = fetchInputFile("input.txt");
         PartOne partOne = new PartOne();
         PartTwo partTwo = new PartTwo();
         partOne.run(input);

@@ -13,30 +13,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class PartTwo implements PartInterface {
     @Override
     public void run(File input) {
         try {
-            System.out.println("\n");
             //PART ONE CODE.
             ComputerConnectionManager ccm = new ComputerConnectionManager();
             InterconnectionManager icm = new InterconnectionManager();
             List<ComputerConnection> connections = parseConnections(input);
             HashMap<Computer, List<Computer>> connectionMap = ccm.createComputerConnections(connections);
             List<ComputerInterconnection> interconnections = icm.findInterconnectedSystems(connectionMap);
-            Predicate<ComputerInterconnection> nameContainsT = interconnection ->
-                    interconnection.getComputerA().getName().startsWith("t") ||
-                            interconnection.getComputerB().getName().startsWith("t") ||
-                            interconnection.getComputerC().getName().startsWith("t");
-            List<ComputerInterconnection>filteredInterConnections = icm.filterInterConnectedLists(interconnections, nameContainsT);
 
             //PART TWO CODE
-            List<Computer> largestInterconnection = icm.findLargestInterconnection(filteredInterConnections);
-            for(Computer computer : largestInterconnection) {
-                System.out.println(computer.getName());
-            }
+            List<Computer> largestInterconnection = icm.findLargestInterconnection(interconnections);
             Collections.sort(largestInterconnection, (a, b) -> a.getName().compareTo(b.getName()));
             String result = String.join(",", largestInterconnection.stream()
                     .map(Computer::getName)

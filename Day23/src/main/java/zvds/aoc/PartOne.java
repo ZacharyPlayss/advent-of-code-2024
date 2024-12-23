@@ -25,19 +25,12 @@ public class PartOne implements PartInterface {
             List<ComputerConnection> connections = parseConnections(input);
             HashMap<Computer, List<Computer>> connectionMap = ccm.createComputerConnections(connections);
             List<ComputerInterconnection> interconnections = icm.findInterconnectedSystems(connectionMap);
-            for (ComputerInterconnection ic : interconnections) {
-                System.out.println(ic);
-            }
             System.out.println("Before filter: This input file contains " + interconnections.size() + " inter-connections.");
             Predicate<ComputerInterconnection> nameContainsT = interconnection ->
                     interconnection.getComputerA().getName().startsWith("t") ||
                     interconnection.getComputerB().getName().startsWith("t") ||
                     interconnection.getComputerC().getName().startsWith("t");
-
             List<ComputerInterconnection>filteredInterConnections = icm.filterInterConnectedLists(interconnections, nameContainsT);
-            for (ComputerInterconnection ic : filteredInterConnections) {
-                System.out.println(ic);
-            }
             System.out.println("After filter: This input file contains " + filteredInterConnections.size() + " inter-connections which start with a t.");
         } catch (Exception e) {
             e.printStackTrace();
